@@ -2,23 +2,23 @@ module "network" {
   source = "./modules/network"
 
   common_name = var.common_name
-  vpc_cidr = "10.0.0.0/16"
+  vpc_cidr    = "10.0.0.0/16"
   subnet_cidr = "10.0.1.0/24"
 
   sg_vpn_public_egress_rules = {
-      port = "51820",
-      protocol = "udp",
-      cidr_blocks = "0.0.0.0/0",
-    }
+    port        = "51820",
+    protocol    = "udp",
+    cidr_blocks = "0.0.0.0/0",
+  }
 }
 
 
 module "ec2_instances" {
   source = "./modules/aws-instance"
 
-  common_name = var.common_name
+  common_name        = var.common_name
   instance_type      = var.ec2_instance_type
-  subnet_id         = module.network.subnet_public_id
+  subnet_id          = module.network.subnet_public_id
   security_group_ids = [module.network.sg_vpn_public_id]
   user_data = base64encode(templatefile(
     "host_setup/user_data/bootstrap.tftpl",

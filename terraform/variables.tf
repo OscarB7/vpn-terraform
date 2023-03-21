@@ -1,15 +1,15 @@
 variable "common_name" {
-  type = string
+  type    = string
   default = "temp"
 }
 
 variable "ec2_instance_type" {
-  type = string
+  type    = string
   default = "t4g.nano"
 }
 
 variable "resource_tags" {
-  type = map
+  type    = map(any)
   default = {}
 }
 
